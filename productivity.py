@@ -90,3 +90,9 @@ if __name__ == '__main__':
     print("So far, Branko has allocated his study time as follows:")
     print("Productive:\t%s" % timelog['timeproductive'])
     print("Unproductive:\t%s" % timelog['timeunproductive'])
+
+    totaltime = timelog['timeproductive'] + timelog['timeunproductive']
+
+    if totaltime:
+        print("which means Branko is productive %d%% of his study time"
+              % (timelog['timeproductive'] / totaltime * 100))
