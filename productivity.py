@@ -7,8 +7,9 @@ import os
 import pickle
 import sys
 
-
+# This is looked for in the directory containing the script
 DATAFILE = 'brankotimelog.pickle'
+
 NO_STATUS = 0
 PRODUCTIVE = 1
 UNPRODUCTIVE = 2
@@ -37,8 +38,12 @@ def prompt(query):
     return result
 
 if __name__ == '__main__':
+    # Get the path of the datafile
+    datafile_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                 DATAFILE)
+
     # Check if datafile exists and load it if so
-    if not os.path.exists(DATAFILE):
+    if not os.path.exists(datafile_path):
         # Make the data object
         timelog = {'timeproductive': datetime.timedelta(),
                    'timeunproductive': datetime.timedelta(),
@@ -47,7 +52,7 @@ if __name__ == '__main__':
                   }
     else:
         # Load the datefile
-        with open(DATAFILE, 'rb') as f:
+        with open(datafile_path, 'rb') as f:
             timelog = pickle.load(f)
 
     # Get current time
@@ -82,7 +87,7 @@ if __name__ == '__main__':
         timelog['lasttimestatus'] = NO_STATUS
 
     # Write to file
-    with open(DATAFILE, 'wb') as f:
+    with open(datafile_path, 'wb') as f:
         pickle.dump(timelog, f, pickle.HIGHEST_PROTOCOL)
 
     # Show stats
